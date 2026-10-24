@@ -9,11 +9,16 @@ public class PropertyOwner extends User {
     }
 
     public Property createProperty(int propertyID, String description, double rentalRate) {
-        Property property;
-        property = new Property(propertyID, description, rentalRate);
-        if (property != null)
+        try {
+            Property property = new Property(propertyID, description, rentalRate);
+
             ownedProperties.add(property);
-        return property;
+
+            return property;
+        } catch (IllegalArgumentException e) {
+            System.out.println("Lỗi tạo tài sản: " + e.getMessage());
+            return null;
+        }
     }
 
     public ArrayList<Property> getOwnedProperties() {
