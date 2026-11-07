@@ -5,20 +5,24 @@ public class PropertyOwner extends User {
 
     public PropertyOwner(int userID, String firstName, String lastName, String email) {
         super(userID, firstName, lastName, email);
-        ownedProperties = new ArrayList<>();
+        this.ownedProperties = new ArrayList<>();
     }
 
     public Property createProperty(int propertyID, String description, double rentalRate) {
         try {
             Property property = new Property(propertyID, description, rentalRate);
 
-            ownedProperties.add(property);
-
-            return property;
+            if (property != null) {
+                ownedProperties.add(property);
+                return property;
+            }
         } catch (IllegalArgumentException e) {
             System.out.println("Lỗi tạo tài sản: " + e.getMessage());
-            return null;
+        } catch (Exception e) {
+            System.out.println("Lỗi không xác định: " + e.getMessage());
         }
+
+        return null;
     }
 
     public ArrayList<Property> getOwnedProperties() {
