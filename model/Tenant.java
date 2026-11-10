@@ -1,3 +1,5 @@
+package model;
+
 import java.util.ArrayList;
 import java.time.LocalDate;
 public class Tenant extends User {
