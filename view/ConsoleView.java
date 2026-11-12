@@ -2,6 +2,7 @@ package view;
 
 import controller.RentalController;
 import model.*;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.time.LocalDate;
 
@@ -12,8 +13,8 @@ public class ConsoleView {
     private PropertyOwner owner;
     private Tenant tenant;
 
-    public ConsoleView(PropertyOwner owner, Tenant tenant) {
-        controller = new RentalController();
+    public ConsoleView(RentalController controller, PropertyOwner owner, Tenant tenant) {
+        this.controller = controller;
         sc = new Scanner(System.in);
         this.owner = owner;
         this.tenant = tenant;
@@ -50,6 +51,9 @@ public class ConsoleView {
                         System.out.println("Invalid choice.");
                 }
 
+            } catch (InputMismatchException e) {
+                sc.nextLine();
+                System.out.println("Error: Please enter a number.");
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
             }
@@ -72,11 +76,12 @@ public class ConsoleView {
 
             Property p = controller.createProperty(owner, id, description, rate);
 
-            if (p != null)
-                System.out.println("Property created successfully!");
-            else
-                System.out.println("Failed to create property.");
+            System.out.println("Property created successfully!");
+            System.out.println("Is available = " + p.isAvailable());
 
+        } catch (InputMismatchException e) {
+            sc.nextLine();
+            System.out.println("Error: Please enter a number.");
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -116,7 +121,11 @@ public class ConsoleView {
                     selected, start, end);
 
             System.out.println("Property rented successfully!");
+            System.out.println("Is available = " + selected.isAvailable());
 
+        } catch (InputMismatchException e) {
+            sc.nextLine();
+            System.out.println("Error: Please enter a number.");
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -139,12 +148,16 @@ public class ConsoleView {
                 if (c.getContractID() == id && c.isActive()) {
                     controller.terminateContract(c);
                     System.out.println("Contract terminated successfully!");
+                    System.out.println("Is available = " + c.getProperty().isAvailable());
                     return;
                 }
             }
 
             System.out.println("Contract not found or already terminated.");
 
+        } catch (InputMismatchException e) {
+            sc.nextLine();
+            System.out.println("Error: Please enter a number.");
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }

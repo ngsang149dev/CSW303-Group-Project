@@ -11,20 +11,9 @@ public class PropertyOwner extends User {
     }
 
     public Property createProperty(int propertyID, String description, double rentalRate) {
-        try {
-            Property property = new Property(propertyID, description, rentalRate);
-
-            if (property != null) {
-                ownedProperties.add(property);
-                return property;
-            }
-        } catch (IllegalArgumentException e) {
-            System.out.println("Lỗi tạo tài sản: " + e.getMessage());
-        } catch (Exception e) {
-            System.out.println("Lỗi không xác định: " + e.getMessage());
-        }
-
-        return null;
+        Property property = new Property(propertyID, description, rentalRate);
+        ownedProperties.add(property);
+        return property;
     }
 
     public ArrayList<Property> getOwnedProperties() {
