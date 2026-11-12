@@ -9,12 +9,11 @@ public class Property {
     public Property(int propertyID, String description, double rentalRate) {
         this.propertyID = propertyID;
         this.description = description;
-        if (rentalRate > 0) {
-            this.rentalRate = rentalRate;
-            isAvailable = true;
-        } else {
-            System.out.println("Rental rate is less than 0.");
+        if (rentalRate <= 0) {
+            throw new IllegalArgumentException("Rental rate must be greater than 0.");
         }
+        this.rentalRate = rentalRate;
+        isAvailable = true;
     }
 
     public void updateDescription(String desc) {
@@ -22,11 +21,10 @@ public class Property {
     }
 
     public void updateRentalRate(double rent) {
-        if (rent > 0) {
-            this.rentalRate = rent;
-        } else {
-            System.out.println("Rental rate is less than 0.");
+        if (rent <= 0) {
+            throw new IllegalArgumentException("Rental rate must be greater than 0.");
         }
+        this.rentalRate = rent;
     }
 
     public int getPropertyID() {
